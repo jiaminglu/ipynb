@@ -75,8 +75,8 @@ def code_from_ipynb(nb, markdown=False):
     code = PREAMBLE
     for cell in nb['cells']:
         if cell['cell_type'] == 'code':
-            # transform the input to executable Python
-            code += ''.join(cell['source'])
+            # transform the input to executable Python, %IPython commands should be filtered out
+            code += ''.join(line for line in cell['source'] if not line.strip().startswith('%'))
         if cell['cell_type'] == 'markdown':
             code += '\n# ' + '# '.join(cell['source'])
         # We want a blank newline after each cell's output.

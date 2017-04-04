@@ -69,14 +69,14 @@ def filter_ast(module_ast):
 
 class IPynbParser(object):
 
-    def __init__(self, filename, enable_params=False):
+    def __init__(self, filename, as_function=False):
         self.filename = filename
         self.funcname = None
         self.params = []  # List[(name: str, doc: str)]
         self.ret = None
         self.code = []
         self.doc = []
-        self.enable_params = enable_params
+        self.as_function = as_function
 
     def parse_code_block(self, lines):
         """
@@ -87,7 +87,7 @@ class IPynbParser(object):
         for i, raw_line in iterator:
             line = raw_line.strip()
             parts = line.split(None, 2)
-            if not self.enable_params or \
+            if not self.as_function or \
                     len(parts) == 0 or \
                     parts[0] not in ['#param', '#return'] or \
                     i + 1 >= len(lines): 
@@ -151,7 +151,7 @@ class IPynbParser(object):
     def get_code(self):
         doc = self.get_doc()
 
-        if self.params:
+        if self.as_function:
             code = 'def {}({}):\n'.format(
                 self.get_func_name(),
                 ', '.join(map('{}=None'.format, self.get_param_list())),
@@ -168,12 +168,12 @@ class IPynbParser(object):
         return code
 
 
-def code_from_ipynb(nb, markdown=False, filename=None, enable_params=False):
+def code_from_ipynb(nb, markdown=False, filename=None, as_function=False):
     """
     Get the code for a given notebook
 
     nb is passed in as a dictionary that's a parsed ipynb file
     """
-    parser = IPynbParser(filename, enable_params)
+    parser = IPynbParser(filename, as_function)
     parser.parse(nb)
     return parser.get_code()

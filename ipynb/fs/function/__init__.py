@@ -45,7 +45,7 @@ class FuncLoader(SourceFileLoader):
                 filename = os.path.basename(self.path)
                 filename = os.path.splitext(filename)[0]
                 return self.source_to_code(code_from_ipynb(
-                    nb, filename=filename, enable_params=True
+                    nb, filename=filename, as_function=True
                 ), self.path)
         else:
             return super().get_code(fullname)

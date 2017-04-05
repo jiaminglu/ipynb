@@ -14,6 +14,43 @@ pip install ipynb
 
 ## Importing a notebook ##
 
+### Import as a function
+
+You can use your ipython notebook directly as a function, just prefix it with `ipynb.fs.function`.
+
+If you have a notebook file named `transform.ipynb`, and its content is:
+
+```
+import cv2
+
+#param <-- annotate your inputs (the following line) in comment.
+img = cv2.imread(...)
+
+#skip <-- annotate anything that prints the intermediate value so that the following line will be ignored.
+print(img.shape)
+
+#return <-- annotate your return values (the folllowing line) in comment.
+result = do.something.with(img)
+```
+
+You can do:
+
+```python
+from ipynb.fs.function.transform import transform
+```
+
+The ipynb file will be turned into:
+
+```python
+def transform(img=None):
+		import cv2
+
+		if img is none:
+				img = cv2.imread(...)
+
+		return do.something.with(img)
+```
+
 ### Full import ###
 
 You can do a 'full' import - this has the same semantics of importing a .py file. All the code in the .ipynb file is executed, and classes/functions/variables in the top level are available for use.

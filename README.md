@@ -1,15 +1,18 @@
 # ipynb
 
-[![Build Status](https://travis-ci.org/yuvipanda/ipynb.svg?branch=master)](https://travis-ci.org/yuvipanda/ipynb)
+[![Build Status](https://travis-ci.org/jiaminglu/ipynb.svg?branch=master)](https://travis-ci.org/jiaminglu/ipynb)
 
 A python package providing an easy way to explicitly import [Jupyter Notebooks](https://github.com/jupyter/notebook) files (`.ipynb`) the same way you would import regular `.py` files.
 
+This is a fork of ipynb that adds support for importing ipynb file as a function,
+which enables you to start your next experiment as soon as you finish your current one.
+
 ## Installation ##
 
-You can install ipynb with:
+You can install with:
 
 ```bash
-pip install ipynb
+pip install ipynb-function
 ```
 
 ## Importing a notebook ##
@@ -23,13 +26,13 @@ If you have a notebook file named `transform.ipynb`, and its content is:
 ```
 import cv2
 
-#param <-- annotate your inputs (the following line) in comment.
+#param The input image <-- annotate your inputs (the following line) in comment.
 img = cv2.imread(...)
 
 #skip <-- annotate anything that prints the intermediate value so that the following line will be ignored.
 print(img.shape)
 
-#return <-- annotate your return values (the folllowing line) in comment.
+#return The output image <-- annotate your return values (the folllowing line) in comment.
 result = do.something.with(img)
 ```
 
@@ -43,12 +46,18 @@ The ipynb file will be turned into:
 
 ```python
 def transform(img=None):
-		import cv2
+    """
+		Any markdown cell before the first line of code comes here.
 
-		if img is none:
-				img = cv2.imread(...)
+		:param img: The input image
+		:return: The output image
+		"""
+    import cv2
 
-		return do.something.with(img)
+    if img is none:
+        img = cv2.imread(...)
+
+    return do.something.with(img)
 ```
 
 The function name is the same as function name.

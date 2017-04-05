@@ -71,7 +71,6 @@ class IPynbParser(object):
 
     def __init__(self, filename, as_function=False):
         self.filename = filename
-        self.funcname = None
         self.params = []  # List[(name: str, doc: str)]
         self.ret = None
         self.code = []
@@ -136,7 +135,7 @@ class IPynbParser(object):
                 self.parse_markdown(cell['source'])
 
     def get_func_name(self):
-        return self.funcname or self.filename
+        return self.filename
 
     def get_doc(self):
         doc = ''.join(self.doc)

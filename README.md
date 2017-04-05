@@ -51,6 +51,8 @@ def transform(img=None):
 		return do.something.with(img)
 ```
 
+The function name is the same as function name.
+
 ### Full import ###
 
 You can do a 'full' import - this has the same semantics of importing a .py file. All the code in the .ipynb file is executed, and classes/functions/variables in the top level are available for use.

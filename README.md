@@ -47,11 +47,11 @@ The ipynb file will be turned into:
 ```python
 def transform(img=None):
     """
-		Any markdown cell before the first line of code comes here.
+    Any markdown cell before the first line of code comes here.
 
-		:param img: The input image
-		:return: The output image
-		"""
+    :param img: The input image
+    :return: The output image
+    """
     import cv2
 
     if img is none:

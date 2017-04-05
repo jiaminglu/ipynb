@@ -7,6 +7,11 @@ def test_func_ipynb():
     assert func() == 'foobar'
     assert func('a') == 'abar'
 
+def test_func_with_skip_ipynb():
+    from ipynb.fs.function.func_with_skip import func_with_skip
+    assert func_with_skip() == 'foobar'
+    assert func_with_skip('a') == 'abar'
+
 def test_bogus_ipynb():
     with pytest.raises(ImportError):
         import ipynb.fs.full.bogus_ipynb as bogus_ipynb

@@ -80,7 +80,7 @@ class IPynbParser(object):
 
     def parse_code_block(self, lines):
         """
-        Parse code block, handle #params, #return
+        Parse code block, handle #params, #return, #skip
         """
         iterator = enumerate(lines)
 
@@ -89,7 +89,7 @@ class IPynbParser(object):
             parts = line.split(None, 2)
             if not self.as_function or \
                     len(parts) == 0 or \
-                    parts[0] not in ['#param', '#return'] or \
+                    parts[0] not in ['#param', '#return', '#skip'] or \
                     i + 1 >= len(lines): 
                 self.code.append(raw_line)
                 continue
@@ -113,6 +113,8 @@ class IPynbParser(object):
                 ret = next(iterator)[1]
                 self.ret = doc
                 self.code.append(indent + 'return {}\n'.format(ret))
+            elif parts[0] == '#skip':
+                next(iterator)
 
         self.code.append('\n')
 
